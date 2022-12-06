@@ -21,17 +21,23 @@ fn find_total_calories_per_elf(input: &str) -> Vec<u32> {
         }
     });
 
-    elves_calories.into_iter().map(|g| {
-        g.into_iter().reduce(|acc, x| {
-            acc + x
-        }).expect("If there is no number here, something's gone wrong with initial parsing")
-    }).collect()
+    elves_calories
+        .into_iter()
+        .map(|g| {
+            g.into_iter()
+                .reduce(|acc, x| acc + x)
+                .expect("If there is no number here, something's gone wrong with initial parsing")
+        })
+        .collect()
 }
 
 pub fn part_one(input: &str) -> Option<u32> {
     let calorie_sums: Vec<u32> = find_total_calories_per_elf(input);
 
-    let total_calories: u32 = *calorie_sums.iter().max().expect("If there's no max value, some thing went wrong");
+    let total_calories: u32 = *calorie_sums
+        .iter()
+        .max()
+        .expect("If there's no max value, some thing went wrong");
 
     Some(total_calories)
 }
