@@ -12,11 +12,11 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - uses: actions/cache@v3
-              with:
-                path: |
-                    ~/.cargo/registry/index/
-                key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+            # - uses: actions/cache@v3
+            #   with:
+            #     path: |
+            #         ~/.cargo/registry/index/
+            #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
             - name: cargo check
               run: cargo check
