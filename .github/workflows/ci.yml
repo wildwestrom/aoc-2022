@@ -8,16 +8,19 @@ env:
 jobs:
     check:
         runs-on: ubuntu-latest
-        name: Check
-        steps:
-            - uses: actions/checkout@v2
-            - name: cargo check
-              run: cargo check
-    test:
-        runs-on: ubuntu-latest
         name: Test
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
+
+            - uses: actions/cache@v3
+              with:
+                path: |
+                    ~/.cargo/registry/index/
+                key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+            - name: cargo check
+              run: cargo check
+
             - name: cargo test
               run: cargo test
     # uncomment to enable clippy lints
@@ -25,6 +28,16 @@ jobs:
     #     runs-on: ubuntu-latest
     #     name: Lint (clippy)
     #     steps:
-    #         - uses: actions/checkout@v2
+    #         - uses: actions/checkout@v3
     #         - name: cargo clippy
     #           run: cargo clippy -- -D warnings
+
+    #         - uses: actions/cache@v3
+    #           with:
+    #             path: |
+    #                 ~/.cargo/bin/
+    #                 ~/.cargo/registry/index/
+    #                 ~/.cargo/registry/cache/
+    #                 ~/.cargo/git/db/
+    #                 target/
+    #             key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
